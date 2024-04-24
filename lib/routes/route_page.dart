@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:home_therapy_app/routes/route_name.dart';
 import 'package:home_therapy_app/screens/home_page.dart';
+import 'package:home_therapy_app/screens/rest_page.dart';
+import 'package:home_therapy_app/screens/select_group_page.dart';
 import 'package:home_therapy_app/screens/settings_page.dart';
 import 'package:home_therapy_app/screens/device_page.dart';
 import 'package:home_therapy_app/screens/track_mixing_page.dart';
@@ -27,6 +29,16 @@ class RoutePage {
     GetPage(
       name: RouteName.trackMixing,
       page: () => const TrackMixing(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: RouteName.selectGroup,
+      page: () => const SelectGroup(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: RouteName.rest,
+      page: () => const Rest(),
       transition: Transition.noTransition,
     ),
   ];

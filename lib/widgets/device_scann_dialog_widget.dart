@@ -103,8 +103,11 @@ class _DeviceScannDialogState extends State<DeviceScannDialog> {
                                     // ignore: use_build_context_synchronously
                                     successSnackBar(
                                         context, '등록완료', '홈 스피커 기기가 등록되었습니다.');
-                                    Get.offAllNamed('/therapyDevice',
-                                        arguments: Get.context);
+                                    // Get.offAllNamed('/therapyDevice',
+                                    //     arguments: Get.context);
+                                    Get.offAllNamed(
+                                      '/selectGroup',
+                                    );
                                   },
                                   child: const Text(
                                     '선택',

@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
               icon: const Icon(
                 Icons.close_rounded,
                 color: Color(0xff5a5a5a),
-                size: 50,
+                size: 40,
               ),
               onPressed: () => Navigator.pop(context)),
         ),

@@ -31,11 +31,11 @@ class _HomeState extends State<Home> {
     checkDeviceConnected().then((value) => setState(() {
           if (value == true) {
             Navigator.of(context).pop();
-            Get.toNamed(RouteName.therapyDevice);
+            Get.toNamed(RouteName.selectGroup);
           }
         }));
-    checkAndSurveyDialog(context);
-    checkVersion();
+    // checkAndSurveyDialog(context);
+    // checkVersion();
   }
 
   @override

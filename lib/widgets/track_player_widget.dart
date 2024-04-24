@@ -32,6 +32,7 @@ Future<bool> asyncTrackPlayListMethod() async {
   if (isDeviceConnected == true) {
     var response = await playList();
     trackPlayList = jsonDecode(utf8.decode(response.bodyBytes)).cast<String>();
+
     await initTrackTitle(trackPlayList);
     trackPlayIndex = List<bool>.generate(
         trackPlayList.length, (int index) => false,
