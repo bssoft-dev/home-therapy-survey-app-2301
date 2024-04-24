@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/screens/play_screen.dart';
+import 'package:home_therapy_app/screens/play_page.dart';
 import 'package:home_therapy_app/screens/settings_page.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
