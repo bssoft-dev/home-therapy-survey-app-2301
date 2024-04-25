@@ -97,9 +97,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                       () async {
                         // 시간 계산
                         if (widget.playCount == 1 &&
-                            playListIndex[index] == false) {
-                          provider.setStopwatch(widget.playCount);
-                        }
+                            playListIndex[index] == false) {}
                         // 음원 재생
                         bool hasTrueValue = playListIndex.contains(true);
 
@@ -237,7 +235,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                                     child: SvgPicture.asset(
                                         'assets/survey/axis/2axis.svg'),
                                   ),
-                                  groupNumber == 2
+                                  groupNumber == 1
                                       ? SizedBox(
                                           width: widgetSize,
                                           height:
@@ -309,7 +307,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                             ),
                           ),
                         ),
-                        if (groupNumber == 2)
+                        if (groupNumber == 1)
                           const Positioned(
                             top: 4,
                             left: 0,
@@ -322,7 +320,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                               ),
                             ),
                           ),
-                        if (groupNumber == 2)
+                        if (groupNumber == 1)
                           const Positioned(
                             top: 4,
                             right: 0,
@@ -335,7 +333,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                               ),
                             ),
                           ),
-                        if (groupNumber == 2)
+                        if (groupNumber == 1)
                           const Positioned(
                             bottom: 4,
                             left: 0,
@@ -348,7 +346,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                               ),
                             ),
                           ),
-                        if (groupNumber == 2)
+                        if (groupNumber == 1)
                           const Positioned(
                             bottom: 4,
                             right: 0,

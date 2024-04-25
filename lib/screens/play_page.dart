@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:home_therapy_app/model/play_number_model.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
+import 'package:home_therapy_app/utils/stopwatch.dart';
 import 'package:home_therapy_app/utils/track_play_api.dart';
 import 'package:home_therapy_app/widgets/background_container_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
@@ -21,9 +22,24 @@ class PlayMusic extends StatefulWidget {
 }
 
 class _PlayMusicState extends State<PlayMusic> {
+  final stopwatchUtil = StopwatchUtil();
+  late Duration _displayedTime;
+
+  void _stopStopwatch() async {
+    stopwatchUtil.stopStopwatch();
+    _displayedTime = stopwatchUtil.elapsedTime;
+  }
+
   @override
   void initState() {
     super.initState();
+    stopwatchUtil.startStopwatch();
+  }
+
+  @override
+  void dispose() {
+    stopwatchUtil.stopStopwatch(); // Ensure proper cleanup
+    super.dispose();
   }
 
   @override
@@ -87,11 +103,6 @@ class _PlayMusicState extends State<PlayMusic> {
                       MediaQuery.of(context).size.width * 0.5,
                       playListIndex[index],
                       () async {
-                        // 시간 계산
-                        if (widget.playCount == 1 &&
-                            playListIndex[index] == false) {
-                          provider.setStopwatch(widget.playCount);
-                        }
                         // 음원 재생
                         bool hasTrueValue = playListIndex.contains(true);
 
@@ -175,6 +186,9 @@ class _PlayMusicState extends State<PlayMusic> {
                       if (widget.playCount < totalNumber) {
                         provider.setPlayNumber(widget.playCount + 1);
                         final int playNumber = provider.playNumber;
+                        _stopStopwatch();
+                        provider.addSession1Result(
+                            widget.playCount, _displayedTime);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -184,8 +198,6 @@ class _PlayMusicState extends State<PlayMusic> {
                           ),
                         );
                       } else {
-                        print('측정 완료');
-                        provider.setStopwatch(widget.playCount);
                         Get.toNamed('rest');
                       }
                     },
