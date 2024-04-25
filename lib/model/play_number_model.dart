@@ -1,6 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'dart:core';
 
+class Session1 {
+  int number;
+  Duration time;
+  Session1({
+    required this.number,
+    required this.time,
+  });
+}
+
 class PlayNumberProvider extends ChangeNotifier {
   int _playNumber = 1;
   int _totalNumber = 1;
@@ -9,12 +18,16 @@ class PlayNumberProvider extends ChangeNotifier {
   List<String> _playList = [];
   List<bool> _playListIndex = [];
 
+  // 세션 1 결과
+  final List<Session1> _session1Result = [];
+
   int get playNumber => _playNumber;
   int get totalNumber => _totalNumber;
   int get groupNumber => _groupNumber;
   Stopwatch get stopwatch => _stopwatch;
   List<String> get playList => _playList;
   List<bool> get playListIndex => _playListIndex;
+  List<Session1> get session1Result => _session1Result;
 
   void setTotalNumber(int count) {
     _totalNumber = count;
@@ -63,6 +76,11 @@ class PlayNumberProvider extends ChangeNotifier {
 
   void updatePlayListIndex(int index, bool state) {
     _playListIndex[index] = state;
+    notifyListeners();
+  }
+
+  void addSession1Result(int number, Duration time) {
+    _session1Result.add(Session1(number: number, time: time));
     notifyListeners();
   }
 }

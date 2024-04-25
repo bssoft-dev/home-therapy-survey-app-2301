@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_therapy_app/screens/play_touch_position_page.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/background_container_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
@@ -78,6 +79,14 @@ class Rest extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       // 다음 세션으로 이동
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlayTouchPosition(
+                            playCount: 1,
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MainColor().mainColor().withOpacity(0.6),

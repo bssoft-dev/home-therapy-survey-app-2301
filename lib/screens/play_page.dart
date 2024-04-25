@@ -11,7 +11,10 @@ import 'package:get/get.dart';
 
 class PlayMusic extends StatefulWidget {
   final int playCount;
-  const PlayMusic({super.key, required this.playCount});
+  const PlayMusic({
+    super.key,
+    required this.playCount,
+  });
 
   @override
   State<PlayMusic> createState() => _PlayMusicState();
