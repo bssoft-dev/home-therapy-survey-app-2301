@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_noise_choice_score.dart';
-import 'package:home_therapy_app/widgets/track_player_widget.dart';
-import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/post_noise_choice_score.dart';
+import 'package:home_therapy_survey_app/widgets/track_player_widget.dart';
+import 'package:home_therapy_survey_app/widgets/volume_controller_widget.dart';
 
 therapyPlay({
   required BuildContext context,

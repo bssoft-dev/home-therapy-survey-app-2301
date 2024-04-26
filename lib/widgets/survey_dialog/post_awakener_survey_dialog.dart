@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/model/version_model.dart';
-import 'package:home_therapy_app/utils/assets_image_list_future.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/common_survey.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/post_word_position_survey_dialog.dart';
+import 'package:home_therapy_survey_app/model/version_model.dart';
+import 'package:home_therapy_survey_app/utils/assets_image_list_future.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/common_survey.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/post_word_position_survey_dialog.dart';
 
 List<String>? postAwakeList;
 int postAwakeValue = 0;

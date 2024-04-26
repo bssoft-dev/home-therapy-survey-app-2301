@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/track_player_widget.dart';
-import 'package:home_therapy_app/widgets/background_container_widget.dart';
-import 'package:home_therapy_app/utils/main_color.dart';
-import 'package:home_therapy_app/widgets/device_info_dialog_widget.dart';
-import 'package:home_therapy_app/widgets/device_scann_dialog_widget.dart';
-import 'package:home_therapy_app/widgets/volume_controller_widget.dart';
+import 'package:home_therapy_survey_app/widgets/track_player_widget.dart';
+import 'package:home_therapy_survey_app/widgets/background_container_widget.dart';
+import 'package:home_therapy_survey_app/utils/main_color.dart';
+import 'package:home_therapy_survey_app/widgets/device_info_dialog_widget.dart';
+import 'package:home_therapy_survey_app/widgets/device_scann_dialog_widget.dart';
+import 'package:home_therapy_survey_app/widgets/volume_controller_widget.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/model/survey_word_position_model.dart';
-import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
-import 'package:home_therapy_app/widgets/range_dropdown_widget.dart';
+import 'package:home_therapy_survey_app/model/survey_word_position_model.dart';
+import 'package:home_therapy_survey_app/widgets/pre_survey_dialog/survey_question_list.dart';
+import 'package:home_therapy_survey_app/widgets/range_dropdown_widget.dart';
 
 Future<List<int>> fetchData() async {
   return List<int>.generate(101 - 0, (i) => i + 0);

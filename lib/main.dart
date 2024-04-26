@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/model/play_number_model.dart';
+import 'package:home_therapy_survey_app/model/play_number_model.dart';
 
-import 'package:home_therapy_app/routes/route_name.dart';
-import 'package:home_therapy_app/routes/route_page.dart';
-import 'package:home_therapy_app/utils/main_color.dart';
+import 'package:home_therapy_survey_app/routes/route_name.dart';
+import 'package:home_therapy_survey_app/routes/route_page.dart';
+import 'package:home_therapy_survey_app/utils/main_color.dart';
 import 'package:provider/provider.dart';
 
 void main() {

@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import 'package:home_therapy_app/routes/route_name.dart';
-import 'package:home_therapy_app/screens/home_page.dart';
-import 'package:home_therapy_app/screens/rest_page.dart';
-import 'package:home_therapy_app/screens/select_group_page.dart';
-import 'package:home_therapy_app/screens/settings_page.dart';
-import 'package:home_therapy_app/screens/device_page.dart';
-import 'package:home_therapy_app/screens/track_mixing_page.dart';
-import 'package:home_therapy_app/screens/suvey_id_input_page.dart';
+import 'package:home_therapy_survey_app/routes/route_name.dart';
+import 'package:home_therapy_survey_app/screens/home_page.dart';
+import 'package:home_therapy_survey_app/screens/rest_page.dart';
+import 'package:home_therapy_survey_app/screens/select_group_page.dart';
+import 'package:home_therapy_survey_app/screens/settings_page.dart';
+import 'package:home_therapy_survey_app/screens/device_page.dart';
+import 'package:home_therapy_survey_app/screens/track_mixing_page.dart';
+import 'package:home_therapy_survey_app/screens/suvey_id_input_page.dart';
 
 class RoutePage {
   static final page = [

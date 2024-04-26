@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_choice_score.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_survey_question_list.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/pre_noise_choice_score.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/pre_survey_question_list.dart';
 
 List<int>? noiseTypeValueList;
 List<int> noiseTypeValue = [];

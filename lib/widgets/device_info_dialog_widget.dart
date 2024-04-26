@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:home_therapy_app/utils/share_rreferences_future.dart';
-import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_survey_app/utils/share_rreferences_future.dart';
+import 'package:home_therapy_survey_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_survey_app/widgets/noti_snackbar_widget.dart';
 
 class DeviceInfoDialog extends StatefulWidget {
   const DeviceInfoDialog({Key? key}) : super(key: key);

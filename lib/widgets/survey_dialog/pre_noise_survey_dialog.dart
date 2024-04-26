@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/widgets/custom_button_widget.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_emotion_survey_dialog.dart';
-import 'package:home_therapy_app/widgets/survey_dialog/pre_noise_choice.dart';
+import 'package:home_therapy_survey_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_survey_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/pre_emotion_survey_dialog.dart';
+import 'package:home_therapy_survey_app/widgets/survey_dialog/pre_noise_choice.dart';
 
 bool isYesCheck = false;
 bool isNoCheck = false;

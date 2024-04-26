@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:home_therapy_app/widgets/background_container_widget.dart';
-import 'package:home_therapy_app/utils/main_color.dart';
-import 'package:home_therapy_app/widgets/track_player_widget.dart';
+import 'package:home_therapy_survey_app/widgets/background_container_widget.dart';
+import 'package:home_therapy_survey_app/utils/main_color.dart';
+import 'package:home_therapy_survey_app/widgets/track_player_widget.dart';
 
 class TrackMixing extends StatefulWidget {
   const TrackMixing({super.key});

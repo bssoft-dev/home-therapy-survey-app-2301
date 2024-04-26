@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/utils/http_request_api.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_survey_app/utils/http_request_api.dart';
+import 'package:home_therapy_survey_app/widgets/noti_snackbar_widget.dart';
 import 'package:http/http.dart' as http;
-import 'package:home_therapy_app/model/play_number_model.dart';
-import 'package:home_therapy_app/utils/main_color.dart';
-import 'package:home_therapy_app/widgets/background_container_widget.dart';
-import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_survey_app/model/play_number_model.dart';
+import 'package:home_therapy_survey_app/utils/main_color.dart';
+import 'package:home_therapy_survey_app/widgets/background_container_widget.dart';
+import 'package:home_therapy_survey_app/widgets/custom_button_widget.dart';
 import 'package:provider/provider.dart';
 
 class SuveyIdInput extends StatelessWidget {

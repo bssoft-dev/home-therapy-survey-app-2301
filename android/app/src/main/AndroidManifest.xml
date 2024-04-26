@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bssoft.home_therapy_app">
+    package="com.bssoft.home_therapy_survey_app">
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
    <application
-        android:label="층간소음완화"
+        android:label="청감실험"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

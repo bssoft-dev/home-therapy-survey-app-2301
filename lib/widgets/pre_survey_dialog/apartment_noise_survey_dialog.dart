@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_therapy_app/utils/http_request_api.dart';
-import 'package:home_therapy_app/utils/share_rreferences_future.dart';
-import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
-import 'package:home_therapy_app/widgets/pre_survey_dialog/pre_common_dialog.dart';
-import 'package:home_therapy_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
-import 'package:home_therapy_app/widgets/pre_survey_dialog/survey_question_list.dart';
+import 'package:home_therapy_survey_app/utils/http_request_api.dart';
+import 'package:home_therapy_survey_app/utils/share_rreferences_future.dart';
+import 'package:home_therapy_survey_app/widgets/noti_snackbar_widget.dart';
+import 'package:home_therapy_survey_app/widgets/pre_survey_dialog/pre_common_dialog.dart';
+import 'package:home_therapy_survey_app/widgets/pre_survey_dialog/pss_tipi_survey_dialog.dart';
+import 'package:home_therapy_survey_app/widgets/pre_survey_dialog/survey_question_list.dart';
 
 int valueA1 = 0;
 int valueA2 = 0;
