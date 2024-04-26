@@ -22,7 +22,7 @@ class Session1 {
 class Session2 {
   String name;
   Duration time;
-  List<int> position;
+  List<double> position;
 
   Session2({
     required this.name,
@@ -32,7 +32,7 @@ class Session2 {
 
   String get _name => name;
   Duration get _time => time;
-  List<int> get _position => position;
+  List<double> get _position => position;
 
   @override
   String toString() {
@@ -153,7 +153,7 @@ class PlayNumberProvider extends ChangeNotifier {
   void addSession2Result(
     String name,
     Duration time,
-    List<int> position,
+    List<double> position,
   ) {
     _session2Result.add(Session2(
       name: name,

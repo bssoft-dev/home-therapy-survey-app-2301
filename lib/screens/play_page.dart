@@ -53,175 +53,184 @@ class _PlayMusicState extends State<PlayMusic> {
     int playItemIndex = playList.indexOf(fileName);
     List<bool> playListIndex = provider.playListIndex;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        foregroundColor: const Color(0xff5A5A5A),
-        actions: [
-          simpleIconButton(Icons.settings_rounded, 40, const Color(0xff5A5A5A),
-              () {
-            Get.toNamed('setting');
-          }),
-        ],
-      ),
-      body: backgroundContainer(
-        context: context,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Row(children: [
-                Text(
-                  '그룹 $groupNumber - 세션 1',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30,
-                    color: Color(0xff5a5a5a),
-                  ),
-                ),
-              ]),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0, 2),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    child: playIconButton(
-                      Icons.play_circle_outline_rounded,
-                      Icons.pause_circle_outline_rounded,
-                      MediaQuery.of(context).size.width * 0.5,
-                      playListIndex[playItemIndex],
-                      () async {
-                        // 음원 재생
-                        bool hasTrueValue = playListIndex.contains(true);
-
-                        if (hasTrueValue) {
-                          // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
-                          int playingTrackIndex = playListIndex.indexOf(true);
-
-                          if (playingTrackIndex == playItemIndex) {
-                            // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
-                            provider.updatePlayListIndex(
-                                playingTrackIndex, false);
-
-                            await playStop();
-                            endTime = DateTime.now();
-                            await calculateElapsedTime(
-                                    playTrackTitleTime.last['time']!, endTime!)
-                                .then((playingTime) {
-                              playTrackTitleTime.last = ({
-                                "name": playList[playingTrackIndex],
-                                "time": playingTime,
-                              });
-                            });
-                          } else {
-                            // 선택한 트랙이 다른 트랙이면 현재 재생 중인 트랙 중지하고 선택한 트랙 재생
-                            provider.updatePlayListIndex(playingTrackIndex,
-                                false); // 현재 재생 중인 트랙을 중지합니다.
-                            provider.updatePlayListIndex(
-                                playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
-                            await playStop();
-                            endTime = DateTime.now();
-                            await calculateElapsedTime(
-                                    playTrackTitleTime.last['time']!, endTime!)
-                                .then((playingTime) {
-                              playTrackTitleTime.last = ({
-                                "name": playList[playingTrackIndex],
-                                "time": playingTime,
-                              });
-                            });
-                            await trackPlay('ready', playList[playItemIndex]);
-                            startTime = DateTime.now();
-                            playTrackTitleTime.add({
-                              "name": playList[playItemIndex],
-                              "time": startTime,
-                            });
-                          }
-                        } else {
-                          // true인 항목이 없다면, 선택한 트랙을 재생
-                          provider.updatePlayListIndex(
-                              playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
-                          await trackPlay('ready', playList[playItemIndex]);
-                          startTime = DateTime.now();
-                          playTrackTitleTime.add(
-                            {
-                              "name": playList[playItemIndex],
-                              "time": startTime,
-                            },
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          foregroundColor: const Color(0xff5A5A5A),
+          actions: [
+            simpleIconButton(
+                Icons.settings_rounded, 40, const Color(0xff5A5A5A), () {
+              Get.toNamed('setting');
+            }),
+          ],
+        ),
+        body: backgroundContainer(
+          context: context,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: Row(children: [
                   Text(
-                    '음원 ${playList[playItemIndex]}',
+                    '그룹 $groupNumber - 세션 1',
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 30,
                       color: Color(0xff5a5a5a),
                     ),
                   ),
-                ],
+                ]),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      final int totalNumber = provider.totalNumber;
-                      if (widget.playCount < totalNumber) {
-                        provider.setPlayNumber(widget.playCount + 1);
-                        final int playNumber = provider.playNumber;
-                        _stopStopwatch();
-                        provider.addSession1Result(
-                            playList[playItemIndex], _displayedTime);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PlayMusic(
-                              playCount: playNumber,
-                            ),
-                          ),
-                        );
-                      } else {
-                        Get.toNamed('rest');
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: MainColor().mainColor().withOpacity(0.6),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 36, vertical: 20),
-                    ),
-                    child: const Text(
-                      '다음',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
                         color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 2),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: playIconButton(
+                        Icons.play_circle_outline_rounded,
+                        Icons.pause_circle_outline_rounded,
+                        MediaQuery.of(context).size.width * 0.5,
+                        playListIndex[playItemIndex],
+                        () async {
+                          // 음원 재생
+                          bool hasTrueValue = playListIndex.contains(true);
+
+                          if (hasTrueValue) {
+                            // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
+                            int playingTrackIndex = playListIndex.indexOf(true);
+
+                            if (playingTrackIndex == playItemIndex) {
+                              // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
+                              provider.updatePlayListIndex(
+                                  playingTrackIndex, false);
+
+                              await playStop();
+                              endTime = DateTime.now();
+                              await calculateElapsedTime(
+                                      playTrackTitleTime.last['time']!,
+                                      endTime!)
+                                  .then((playingTime) {
+                                playTrackTitleTime.last = ({
+                                  "name": playList[playingTrackIndex],
+                                  "time": playingTime,
+                                });
+                              });
+                            } else {
+                              // 선택한 트랙이 다른 트랙이면 현재 재생 중인 트랙 중지하고 선택한 트랙 재생
+                              provider.updatePlayListIndex(playingTrackIndex,
+                                  false); // 현재 재생 중인 트랙을 중지합니다.
+                              provider.updatePlayListIndex(
+                                  playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                              await playStop();
+                              endTime = DateTime.now();
+                              await calculateElapsedTime(
+                                      playTrackTitleTime.last['time']!,
+                                      endTime!)
+                                  .then((playingTime) {
+                                playTrackTitleTime.last = ({
+                                  "name": playList[playingTrackIndex],
+                                  "time": playingTime,
+                                });
+                              });
+                              await trackPlay('ready', playList[playItemIndex]);
+                              startTime = DateTime.now();
+                              playTrackTitleTime.add({
+                                "name": playList[playItemIndex],
+                                "time": startTime,
+                              });
+                            }
+                          } else {
+                            // true인 항목이 없다면, 선택한 트랙을 재생
+                            provider.updatePlayListIndex(
+                                playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                            await trackPlay('ready', playList[playItemIndex]);
+                            startTime = DateTime.now();
+                            playTrackTitleTime.add(
+                              {
+                                "name": playList[playItemIndex],
+                                "time": startTime,
+                              },
+                            );
+                          }
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    Text(
+                      '음원 ${playList[playItemIndex]}',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Color(0xff5a5a5a),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        final int totalNumber = provider.totalNumber;
+                        if (widget.playCount < totalNumber) {
+                          provider.setPlayNumber(widget.playCount + 1);
+                          final int playNumber = provider.playNumber;
+                          _stopStopwatch();
+                          provider.addSession1Result(
+                              playList[playItemIndex], _displayedTime);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlayMusic(
+                                playCount: playNumber,
+                              ),
+                            ),
+                          );
+                        } else {
+                          Get.toNamed('rest');
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            MainColor().mainColor().withOpacity(0.6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 36, vertical: 20),
+                      ),
+                      child: const Text(
+                        '다음',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

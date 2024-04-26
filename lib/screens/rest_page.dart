@@ -16,101 +16,107 @@ class Rest extends StatelessWidget {
         context.read<PlayNumberProvider>().session1Result;
     print(session1Result);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        foregroundColor: const Color(0xff5A5A5A),
-        actions: [
-          simpleIconButton(Icons.settings_rounded, 40, const Color(0xff5A5A5A),
-              () {
-            Get.toNamed('setting');
-          }),
-        ],
-      ),
-      body: backgroundContainer(
-        context: context,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(40),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2), // 반투명한 Container
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0, 2),
-                          blurRadius: 4,
-                          blurStyle: BlurStyle.outer,
-                        ),
-                      ],
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '일정 시간 휴식 후',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 30,
-                            color: Color(0xff5a5a5a),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          foregroundColor: const Color(0xff5A5A5A),
+          actions: [
+            simpleIconButton(
+                Icons.settings_rounded, 40, const Color(0xff5A5A5A), () {
+              Get.toNamed('setting');
+            }),
+          ],
+        ),
+        body: backgroundContainer(
+          context: context,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(40),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2), // 반투명한 Container
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 2),
+                            blurRadius: 4,
+                            blurStyle: BlurStyle.outer,
                           ),
-                        ),
-                        Text(
-                          '다음 세션을 진행합니다',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 30,
-                            color: Color(0xff5a5a5a),
+                        ],
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '일정 시간 휴식 후',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                              color: Color(0xff5a5a5a),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // 다음 세션으로 이동
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PlayTouchPosition(
-                            playCount: 1,
+                          Text(
+                            '다음 세션을 진행합니다',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                              color: Color(0xff5a5a5a),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: MainColor().mainColor().withOpacity(0.6),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 36, vertical: 20),
-                    ),
-                    child: const Text(
-                      '다음',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // 다음 세션으로 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PlayTouchPosition(
+                              playCount: 1,
+                            ),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            MainColor().mainColor().withOpacity(0.6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 36, vertical: 20),
+                      ),
+                      child: const Text(
+                        '다음',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
