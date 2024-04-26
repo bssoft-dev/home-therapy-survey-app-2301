@@ -44,7 +44,7 @@ class RoutePage {
     ),
     GetPage(
       name: RouteName.surveyIdInput,
-      page: () => const SuveyIdInput(),
+      page: () => SuveyIdInput(),
       transition: Transition.noTransition,
     ),
   ];

@@ -2,6 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 
+// String formatDuration(Duration duration) {
+//   String twoDigits(int n) => n.toString().padLeft(2, '0');
+//   String threeDigits(int n) => n.toString().padLeft(3, '0');
+
+//   String hours = twoDigits(duration.inHours);
+//   String minutes = twoDigits(duration.inMinutes.remainder(60));
+//   String seconds = twoDigits(duration.inSeconds.remainder(60));
+//   String milliseconds = threeDigits(duration.inMilliseconds.remainder(1000));
+//   String microseconds = threeDigits(duration.inMicroseconds.remainder(1000));
+
+//   return "$hours:$minutes:$seconds.$milliseconds$microseconds";
+// }
+
 class Session1 {
   String name;
   Duration time;
@@ -13,6 +26,14 @@ class Session1 {
 
   String get _name => name;
   Duration get _time => time;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'time': time.inMilliseconds / 1000.0,
+    };
+  }
+
   @override
   String toString() {
     return '{name: $name, time: $time}';
@@ -33,6 +54,14 @@ class Session2 {
   String get _name => name;
   Duration get _time => time;
   List<double> get _position => position;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'time': time.inMilliseconds / 1000.0,
+      'position': position,
+    };
+  }
 
   @override
   String toString() {

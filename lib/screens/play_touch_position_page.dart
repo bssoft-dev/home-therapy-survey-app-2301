@@ -408,13 +408,13 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                     ElevatedButton(
                       onPressed: () {
                         final int totalNumber = provider.totalNumber;
-                        if (widget.playCount < totalNumber) {
-                          provider.setPlayNumber(widget.playCount + 1);
-                          final int playNumber = provider.playNumber;
-                          _stopStopwatch();
-                          if (_offsePosition != null) {
-                            provider.addSession2Result(playList[playItemIndex],
-                                _displayedTime, _offsePosition!);
+                        provider.setPlayNumber(widget.playCount + 1);
+                        final int playNumber = provider.playNumber;
+                        _stopStopwatch();
+                        if (_offsePosition != null) {
+                          provider.addSession2Result(playList[playItemIndex],
+                              _displayedTime, _offsePosition!);
+                          if (widget.playCount < totalNumber) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -424,10 +424,10 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                               ),
                             );
                           } else {
-                            failSnackBar('미측정', '화면을 터치하여 음원을 평가해주세요');
+                            Get.toNamed('surveyIdInput');
                           }
                         } else {
-                          Get.toNamed('surveyIdInput');
+                          failSnackBar('미측정', '화면을 터치하여 음원을 평가해주세요');
                         }
                       },
                       style: ElevatedButton.styleFrom(

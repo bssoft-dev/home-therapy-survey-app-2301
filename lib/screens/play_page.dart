@@ -193,12 +193,12 @@ class _PlayMusicState extends State<PlayMusic> {
                     ElevatedButton(
                       onPressed: () {
                         final int totalNumber = provider.totalNumber;
+                        provider.setPlayNumber(widget.playCount + 1);
+                        final int playNumber = provider.playNumber;
+                        _stopStopwatch();
+                        provider.addSession1Result(
+                            playList[playItemIndex], _displayedTime);
                         if (widget.playCount < totalNumber) {
-                          provider.setPlayNumber(widget.playCount + 1);
-                          final int playNumber = provider.playNumber;
-                          _stopStopwatch();
-                          provider.addSession1Result(
-                              playList[playItemIndex], _displayedTime);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
