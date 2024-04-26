@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/play_number_model.dart';
-import 'package:home_therapy_app/screens/play_touch_position_page.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/background_container_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:provider/provider.dart';
 
-class Rest extends StatelessWidget {
-  const Rest({super.key});
+class SuveyIdInput extends StatelessWidget {
+  const SuveyIdInput({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Session1> session1Result =
-        context.read<PlayNumberProvider>().session1Result;
-    print(session1Result);
+    List<Session2> session2Result =
+        context.read<PlayNumberProvider>().session2Result;
+    print(session2Result);
+
+    final TextEditingController suveyIdController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -51,23 +52,43 @@ class Rest extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          '일정 시간 휴식 후',
+                        const Text(
+                          '설문지에 기재한 ',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 30,
                             color: Color(0xff5a5a5a),
                           ),
                         ),
-                        Text(
-                          '다음 세션을 진행합니다',
+                        const Text(
+                          'ID를 입력해주세요',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 30,
                             color: Color(0xff5a5a5a),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: TextField(
+                            controller: suveyIdController,
+                            decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintText: 'ID를 입력하세요',
+                            ),
                           ),
                         ),
                       ],
@@ -84,14 +105,14 @@ class Rest extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       // 다음 세션으로 이동
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PlayTouchPosition(
-                            playCount: 1,
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const PlayTouchPosition(
+                      //       playCount: 1,
+                      //     ),
+                      //   ),
+                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MainColor().mainColor().withOpacity(0.6),
@@ -99,7 +120,7 @@ class Rest extends StatelessWidget {
                           horizontal: 36, vertical: 20),
                     ),
                     child: const Text(
-                      '다음',
+                      '완료',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,

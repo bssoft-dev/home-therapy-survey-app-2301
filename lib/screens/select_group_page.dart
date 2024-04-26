@@ -5,6 +5,7 @@ import 'package:home_therapy_app/screens/settings_page.dart';
 import 'package:home_therapy_app/utils/main_color.dart';
 import 'package:home_therapy_app/widgets/appbar_widget.dart';
 import 'package:home_therapy_app/widgets/background_container_widget.dart';
+import 'package:home_therapy_app/widgets/custom_button_widget.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:home_therapy_app/model/play_number_model.dart';
@@ -21,7 +22,7 @@ class _SelectGroupState extends State<SelectGroup> {
   final TextEditingController _totalNumberController = TextEditingController();
   final MainColor mainColor = MainColor();
   Future<bool>? asyncMethodFuture;
-  List<String> list = [];
+  List<dynamic> list = [];
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _SelectGroupState extends State<SelectGroup> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       asyncMethodFuture?.then((isConnected) {
         if (isConnected) {
-          selectPlayNumberDialog();
+          // selectPlayNumberDialog();
           setState(() {
             list = trackPlayList;
           });
@@ -43,7 +44,17 @@ class _SelectGroupState extends State<SelectGroup> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: basicAppBar(context, _scaffoldKey),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        foregroundColor: const Color(0xff5A5A5A),
+        actions: [
+          simpleIconButton(Icons.settings_rounded, 40, const Color(0xff5A5A5A),
+              () {
+            Get.toNamed('setting');
+          }),
+        ],
+      ),
       endDrawer: const Settings(),
       extendBodyBehindAppBar: true,
       body: backgroundContainer(
@@ -149,7 +160,7 @@ class GroupButton extends StatelessWidget {
   final Color color;
   final String text;
   final int groupNumber;
-  final List<String> list;
+  final List<dynamic> list;
 
   @override
   Widget build(BuildContext context) {

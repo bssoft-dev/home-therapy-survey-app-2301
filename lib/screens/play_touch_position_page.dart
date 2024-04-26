@@ -3,9 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:home_therapy_app/model/play_number_model.dart';
+import 'package:home_therapy_app/utils/main_color.dart';
+import 'package:home_therapy_app/utils/stopwatch.dart';
 import 'package:home_therapy_app/utils/track_play_api.dart';
 import 'package:home_therapy_app/widgets/background_container_widget.dart';
 import 'package:home_therapy_app/widgets/custom_button_widget.dart';
+import 'package:home_therapy_app/widgets/noti_snackbar_widget.dart';
 import 'package:home_therapy_app/widgets/track_player_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,24 +25,60 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
   Offset? circlePosition;
   // 터치 위치를 저장할 변수
   String _position = '여기를 터치하세요';
+  List<int>? _offsePosition;
+
+  // 시간 측정
+  final stopwatchUtil = StopwatchUtil();
+  late Duration _displayedTime;
+
+  void _stopStopwatch() {
+    stopwatchUtil.stopStopwatch();
+    _displayedTime = stopwatchUtil.elapsedTime;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    stopwatchUtil.startStopwatch();
+  }
+
+  @override
+  void dispose() {
+    stopwatchUtil.stopStopwatch(); // Ensure proper cleanup
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isTablet = MediaQuery.of(context).size.shortestSide >= 600;
+
     PlayNumberProvider provider = Provider.of<PlayNumberProvider>(context);
     int groupNumber = provider.groupNumber;
     int index = widget.playCount - 1;
-    List<String> playList = provider.playList;
+    List<dynamic> playList = provider.playList;
+    List<int> session2PlayList = provider.session2PlayList;
+    String fileName = '${session2PlayList[index]}.wav';
+    int playItemIndex = playList.indexOf(fileName);
     List<bool> playListIndex = provider.playListIndex;
     // 위젯의 너비와 높이를 정의합니다.
     final screenWidth = MediaQuery.of(context).size.width;
-    final widgetSize = screenWidth * 0.7; //  화면 너비의 80%
-    final containerSize = screenWidth * 0.83; //  화면 너비의 80%
+    final widgetSize =
+        isTablet ? screenWidth * 0.6 : screenWidth * 0.7; //  화면 너비의 70%
+    final containerSize = isTablet ? screenWidth * 0.7 : screenWidth * 0.83;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         foregroundColor: const Color(0xff5A5A5A),
+        title: Text(
+          '그룹 $groupNumber - 세션 1',
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 30,
+            color: Color(0xff5a5a5a),
+          ),
+        ),
         actions: [
           simpleIconButton(Icons.settings_rounded, 40, const Color(0xff5A5A5A),
               () {
@@ -53,21 +92,8 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Row(children: [
-                Text(
-                  '그룹 $groupNumber - 세션 1',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30,
-                    color: Color(0xff5a5a5a),
-                  ),
-                ),
-              ]),
-            ),
             const SizedBox(
-              height: 20,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -95,9 +121,6 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                       MediaQuery.of(context).size.width * 0.2,
                       playListIndex[index],
                       () async {
-                        // 시간 계산
-                        if (widget.playCount == 1 &&
-                            playListIndex[index] == false) {}
                         // 음원 재생
                         bool hasTrueValue = playListIndex.contains(true);
 
@@ -105,7 +128,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                           // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
                           int playingTrackIndex = playListIndex.indexOf(true);
 
-                          if (playingTrackIndex == index) {
+                          if (playingTrackIndex == playItemIndex) {
                             // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
                             provider.updatePlayListIndex(
                                 playingTrackIndex, false);
@@ -125,7 +148,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                             provider.updatePlayListIndex(playingTrackIndex,
                                 false); // 현재 재생 중인 트랙을 중지합니다.
                             provider.updatePlayListIndex(
-                                index, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                                playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
                             await playStop();
                             endTime = DateTime.now();
                             await calculateElapsedTime(
@@ -136,22 +159,22 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                                 "time": playingTime,
                               });
                             });
-                            await trackPlay('ready', playList[index]);
+                            await trackPlay('ready', playList[playItemIndex]);
                             startTime = DateTime.now();
                             playTrackTitleTime.add({
-                              "name": playList[index],
+                              "name": playList[playItemIndex],
                               "time": startTime,
                             });
                           }
                         } else {
                           // true인 항목이 없다면, 선택한 트랙을 재생
                           provider.updatePlayListIndex(
-                              index, true); // 선택한 트랙을 재생 상태로 설정합니다.
-                          await trackPlay('ready', playList[index]);
+                              playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                          await trackPlay('ready', playList[playItemIndex]);
                           startTime = DateTime.now();
                           playTrackTitleTime.add(
                             {
-                              "name": playList[index],
+                              "name": playList[playItemIndex],
                               "time": startTime,
                             },
                           );
@@ -161,7 +184,7 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '음원 ${widget.playCount}',
+                    '음원 ${playList[playItemIndex]}',
                     style: const TextStyle(
                       fontSize: 24,
                       color: Color(0xff5a5a5a),
@@ -224,6 +247,10 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                                   // 결과를 문자열로 저장합니다.
                                   _position =
                                       'X축: ${scaledX.ceil()}, Y축: ${scaledY.ceil()}';
+                                  _offsePosition = [
+                                    scaledX.ceil(),
+                                    scaledY.ceil()
+                                  ];
                                 });
                               },
                               child: Stack(
@@ -364,7 +391,54 @@ class _PlayTouchPositionState extends State<PlayTouchPosition> {
                   ],
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      final int totalNumber = provider.totalNumber;
+                      if (widget.playCount < totalNumber) {
+                        provider.setPlayNumber(widget.playCount + 1);
+                        final int playNumber = provider.playNumber;
+                        _stopStopwatch();
+                        if (_offsePosition != null) {
+                          provider.addSession2Result(playList[playItemIndex],
+                              _displayedTime, _offsePosition!);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlayTouchPosition(
+                                playCount: playNumber,
+                              ),
+                            ),
+                          );
+                        } else {
+                          failSnackBar('미측정', '화면을 터치하여 음원을 평가해주세요');
+                        }
+                      } else {
+                        Get.toNamed('surveyIdInput');
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: MainColor().mainColor().withOpacity(0.6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 36, vertical: 20),
+                    ),
+                    child: const Text(
+                      '다음',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

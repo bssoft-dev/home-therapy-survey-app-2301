@@ -5,4 +5,5 @@ class RouteName {
   static const trackMixing = '/trackMixing';
   static const selectGroup = '/selectGroup';
   static const rest = '/rest';
+  static const surveyIdInput = '/surveyIdInput';
 }

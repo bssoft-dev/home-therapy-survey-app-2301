@@ -25,7 +25,7 @@ class _PlayMusicState extends State<PlayMusic> {
   final stopwatchUtil = StopwatchUtil();
   late Duration _displayedTime;
 
-  void _stopStopwatch() async {
+  void _stopStopwatch() {
     stopwatchUtil.stopStopwatch();
     _displayedTime = stopwatchUtil.elapsedTime;
   }
@@ -47,7 +47,10 @@ class _PlayMusicState extends State<PlayMusic> {
     PlayNumberProvider provider = Provider.of<PlayNumberProvider>(context);
     int groupNumber = provider.groupNumber;
     int index = widget.playCount - 1;
-    List<String> playList = provider.playList;
+    List<dynamic> playList = provider.playList;
+    List<int> session1PlayList = provider.session1PlayList;
+    String fileName = '${session1PlayList[index]}.wav';
+    int playItemIndex = playList.indexOf(fileName);
     List<bool> playListIndex = provider.playListIndex;
 
     return Scaffold(
@@ -101,7 +104,7 @@ class _PlayMusicState extends State<PlayMusic> {
                       Icons.play_circle_outline_rounded,
                       Icons.pause_circle_outline_rounded,
                       MediaQuery.of(context).size.width * 0.5,
-                      playListIndex[index],
+                      playListIndex[playItemIndex],
                       () async {
                         // 음원 재생
                         bool hasTrueValue = playListIndex.contains(true);
@@ -110,7 +113,7 @@ class _PlayMusicState extends State<PlayMusic> {
                           // true인 항목이 있다면, 현재 재생 중인 트랙을 찾습니다.
                           int playingTrackIndex = playListIndex.indexOf(true);
 
-                          if (playingTrackIndex == index) {
+                          if (playingTrackIndex == playItemIndex) {
                             // 선택한 트랙이 이미 재생 중인 트랙이면 정지합니다.
                             provider.updatePlayListIndex(
                                 playingTrackIndex, false);
@@ -130,7 +133,7 @@ class _PlayMusicState extends State<PlayMusic> {
                             provider.updatePlayListIndex(playingTrackIndex,
                                 false); // 현재 재생 중인 트랙을 중지합니다.
                             provider.updatePlayListIndex(
-                                index, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                                playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
                             await playStop();
                             endTime = DateTime.now();
                             await calculateElapsedTime(
@@ -141,22 +144,22 @@ class _PlayMusicState extends State<PlayMusic> {
                                 "time": playingTime,
                               });
                             });
-                            await trackPlay('ready', playList[index]);
+                            await trackPlay('ready', playList[playItemIndex]);
                             startTime = DateTime.now();
                             playTrackTitleTime.add({
-                              "name": playList[index],
+                              "name": playList[playItemIndex],
                               "time": startTime,
                             });
                           }
                         } else {
                           // true인 항목이 없다면, 선택한 트랙을 재생
                           provider.updatePlayListIndex(
-                              index, true); // 선택한 트랙을 재생 상태로 설정합니다.
-                          await trackPlay('ready', playList[index]);
+                              playItemIndex, true); // 선택한 트랙을 재생 상태로 설정합니다.
+                          await trackPlay('ready', playList[playItemIndex]);
                           startTime = DateTime.now();
                           playTrackTitleTime.add(
                             {
-                              "name": playList[index],
+                              "name": playList[playItemIndex],
                               "time": startTime,
                             },
                           );
@@ -166,7 +169,7 @@ class _PlayMusicState extends State<PlayMusic> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    '음원 ${widget.playCount}',
+                    '음원 ${playList[playItemIndex]}',
                     style: const TextStyle(
                       fontSize: 24,
                       color: Color(0xff5a5a5a),
@@ -188,7 +191,7 @@ class _PlayMusicState extends State<PlayMusic> {
                         final int playNumber = provider.playNumber;
                         _stopStopwatch();
                         provider.addSession1Result(
-                            widget.playCount, _displayedTime);
+                            playList[playItemIndex], _displayedTime);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -7,6 +7,7 @@ import 'package:home_therapy_app/screens/select_group_page.dart';
 import 'package:home_therapy_app/screens/settings_page.dart';
 import 'package:home_therapy_app/screens/device_page.dart';
 import 'package:home_therapy_app/screens/track_mixing_page.dart';
+import 'package:home_therapy_app/screens/suvey_id_input_page.dart';
 
 class RoutePage {
   static final page = [
@@ -39,6 +40,11 @@ class RoutePage {
     GetPage(
       name: RouteName.rest,
       page: () => const Rest(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: RouteName.surveyIdInput,
+      page: () => const SuveyIdInput(),
       transition: Transition.noTransition,
     ),
   ];
