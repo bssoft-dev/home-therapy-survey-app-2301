@@ -168,6 +168,7 @@ class GroupButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         provider.setGroupNumber(groupNumber);
+        provider.setPlayNumber(1);
         final int pageNumber = context.read<PlayNumberProvider>().playNumber;
         provider.setPlayList(list);
         Get.to(
